@@ -25,6 +25,7 @@ namespace UserScript
         {
             try
             {
+               // args = new string[] { "ry"};
                 // connect to the APAS.
                 var client = new SystemServiceClient();
                 client.Open();

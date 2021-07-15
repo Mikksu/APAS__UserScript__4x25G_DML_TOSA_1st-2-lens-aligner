@@ -197,16 +197,22 @@ namespace UserScript
         /// <summary>
         /// 执行忙扫。
         /// </summary>
-        /// <param name="Service"></param>
+        /// <param name="apas"></param>
         /// <param name="opts"></param>
-        private static void Step1(SystemServiceClient Service, Options opts)
+        private static void Step1(SystemServiceClient apas, Options opts)
         {
             var cycle = 0;
 
-            var powerPrev = Service.__SSC_Powermeter_Read(opts.PowerMeterCaption);
+            apas.__SSC_Powermeter_SetRange(opts.PowerMeterCaption, SSC_PMRangeEnum.AUTO);
+            Thread.Sleep(500);
+            var powerPrev = apas.__SSC_Powermeter_Read(opts.PowerMeterCaption);
 
-            __redo_rectscan:
-            Service.__SSC_LogInfo($"开始面扫描搜索初始光...cycle({cycle})");
+            apas.__SSC_Powermeter_SetRange(opts.PowerMeterCaption, SSC_PMRangeEnum.RANGE1);
+
+            apas.__SSC_LogInfo($"初始光功率：{powerPrev:F2}dBm");
+
+        __redo_rectscan:
+            apas.__SSC_LogInfo($"开始面扫描搜索初始光...cycle({cycle})");
             cycle++;
 
             //PerformAlignment(Service,
@@ -215,14 +221,16 @@ namespace UserScript
             //    new[] {opts.ProfileNameBlindSearch},
             //    SSC_PMRangeEnum.RANGE1, double.NaN, 2);
 
-            var ret = Service.__SSC_DoRectAreaScan(opts.ProfileNameBlindSearch);
+           
+
+            var ret = apas.__SSC_DoRectAreaScan(opts.ProfileNameBlindSearch);
 
             Thread.Sleep(200);
 
             // Service.__SSC_Powermeter_SetRange(PM_CAPTION, SSC_PMRangeEnum.AUTO);
             //var power = Service.__SSC_Powermeter_Read(opts.PowerMeterCaption);
             var power = ret.PeakValue;
-            Service.__SSC_LogInfo($"最大功率：{power}mV");
+            apas.__SSC_LogInfo($"最大功率：{power}mV");
 
             // The exit condition is power > -15dBm
             //if (power < opts.PowerThreRectAreaScan)
@@ -237,15 +245,15 @@ namespace UserScript
 
                 if (cycle == 1)
                 {
-                    Service.__SSC_LogWarn("搜索失败，Z轴-20um重新搜索...");
-                    Service.__SSC_MoveAxis("Lens", "Z", SSC_MoveMode.REL, 100, -20);
+                    apas.__SSC_LogWarn("搜索失败，Z轴-20um重新搜索...");
+                    apas.__SSC_MoveAxis("Lens", "Z", SSC_MoveMode.REL, 100, -20);
                     goto __redo_rectscan;
                 }
 
                 if (cycle == 2)
                 {
-                    Service.__SSC_LogWarn("搜索失败，Z轴+40um重新搜索...");
-                    Service.__SSC_MoveAxis("Lens", "Z", SSC_MoveMode.REL, 100, 40);
+                    apas.__SSC_LogWarn("搜索失败，Z轴+40um重新搜索...");
+                    apas.__SSC_MoveAxis("Lens", "Z", SSC_MoveMode.REL, 100, 40);
                     goto __redo_rectscan;
                 }
 
@@ -253,11 +261,12 @@ namespace UserScript
             }
             else
             {
-                Service.__SSC_LogInfo("重新搜索峰值...");
+                apas.__SSC_LogInfo("重新搜索峰值...");
                 var maxCycle = 0;
+
                 while (true)
                 {
-                    ret = Service.__SSC_DoRectAreaScan(opts.ProfileNameBlindSearchSmallStep);
+                    ret = apas.__SSC_DoRectAreaScan(opts.ProfileNameBlindSearchSmallStep);
                     if (ret.PeakValue > 3000)
                         break;
                     else
@@ -441,7 +450,7 @@ namespace UserScript
 
                 if (opts.UseProfileNdInReceptLensDualScan == false)
                 {
-                    Apas.__SSC_Powermeter_SetRange(opts.PowerMeterCaption, SSC_PMRangeEnum.RANGE4);
+                    Apas.__SSC_Powermeter_SetRange(opts.PowerMeterCaption, SSC_PMRangeEnum.RANGE3);
                     Apas.__SSC_DoFastND(opts.ProfileNameDualLineScanRecept);
                 }
                 else

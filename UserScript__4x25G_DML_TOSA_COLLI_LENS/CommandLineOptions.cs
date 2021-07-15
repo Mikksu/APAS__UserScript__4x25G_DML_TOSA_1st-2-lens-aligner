@@ -83,7 +83,7 @@ namespace UserScript
             HelpText = "耦合终止阈值功率，当超过此功率时结束耦合，单位dBm")]
         public double PowerThreTerminate { get; set; }
 
-        [Option("powermeter", Required = false, Default = "PM1906A2",
+        [Option("powermeter", Required = false, Default = "PM1906A1",
             HelpText = "读取功率使用的功率计名称")]
         public string PowerMeterCaption { get; set; }
 

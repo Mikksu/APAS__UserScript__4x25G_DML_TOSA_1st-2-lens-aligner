@@ -83,6 +83,7 @@ namespace UserScript
             {
                 errText = "The service operation timed out. " + timeProblem.Message;
                 Console.Error.WriteLine(errText);
+                isExceptionThrown = true;
             }
             // Catch unrecognized faults. This handler receives exceptions thrown by WCF
             // services when ServiceDebugBehavior.IncludeExceptionDetailInFaults
@@ -93,12 +94,14 @@ namespace UserScript
                           + faultEx.Message
                           + faultEx.StackTrace;
                 Console.Error.WriteLine(errText);
+                isExceptionThrown = true;
             }
             // Standard communication fault handler.
             catch (CommunicationException commProblem)
             {
                 errText = "There was a communication problem. " + commProblem.Message + commProblem.StackTrace;
                 Console.Error.WriteLine(errText);
+                isExceptionThrown = true;
             }
             catch (Exception ex)
             {
