@@ -75,6 +75,8 @@ namespace UserScript
         private const string DP800_READ_CURR_CH2 = "RIGOL DP800s,CH2电流";
         private const string DP800_READ_CURR_CH3 = "RIGOL DP800s,CH3电流";
 
+        private const string PS_BOARD_CAPTION = "4x25G DML TOSA Power Supplier";
+
         #endregion
 
         #region Private Methods

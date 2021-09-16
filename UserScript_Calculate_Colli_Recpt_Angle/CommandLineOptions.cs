@@ -27,15 +27,15 @@ namespace UserScript
             HelpText = "通道间间距换算系数")]
         public double Coeff { get; set; }
 
-        [Option('r', "prefix-recept-x", Required = false, Default = "RECEPT_X_",
+        [Option('r', "prefix-recept-x", Required = false, Default = "COLL_X_AF_AL_",
             HelpText = "Receptacle X轴坐标变量名")]
         public string PrefixVarRead { get; set; }
         
-        [Option('w', "prefix-theta-y", Required = false, Default = "THETA_Y", 
+        [Option('w', "prefix-theta-y", Required = false, Default = "COLL_RY", 
             HelpText = "保存计算后的θy的变量名")]
         public string VarNameTheta { get; set; }
 
-        [Option('m', "var-name-pos-max-diff", Required = false, Default = "X_POS_MAX_DIFF", 
+        [Option('m', "var-name-pos-max-diff", Required = false, Default = "COLL_X_DIFF", 
             HelpText = "保存X轴坐标极差")]
         public string VarNamePosMaxDiff { get; set; }
     }
@@ -51,15 +51,15 @@ namespace UserScript
             HelpText = "通道间间距换算系数")]
         public double Coeff { get; set; }
 
-        [Option('r', "prefix-recept-y", Required = false, Default = "RECEPT_Y_",
+        [Option('r', "prefix-recept-y", Required = false, Default = "COLL_Y_AF_AL_",
             HelpText = "Receptacle Y轴坐标变量名")]
         public string PrefixVarRead { get; set; }
         
-        [Option('w', "prefix-theta-x", Required = false, Default = "THETA_X", 
+        [Option('w', "prefix-theta-x", Required = false, Default = "COLL_RX", 
             HelpText = "保存计算后的θx的变量名")]
         public string VarNameTheta { get; set; }
         
-        [Option('m', "var-name-pos-max-diff", Required = false, Default = "Y_POS_MAX_DIFF", 
+        [Option('m', "var-name-pos-max-diff", Required = false, Default = "COLL_Y_DIFF", 
             HelpText = "保存Y轴坐标极差")]
         public string VarNamePosMaxDiff { get; set; }
     }

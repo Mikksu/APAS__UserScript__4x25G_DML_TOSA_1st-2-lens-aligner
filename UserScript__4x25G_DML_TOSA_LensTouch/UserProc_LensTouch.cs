@@ -48,7 +48,7 @@ namespace UserScript
                         totalMoved += (-opts.FeedInStep);
 
                         var volt = apas.__SSC_MeasurableDevice_Read(opts.SensorName);
-                        if (Math.Abs(volt - initVolt) <= 5)
+                        if (Math.Abs(volt - initVolt) <= 10)
                             break;
 
                         if (Math.Abs(totalMoved) > opts.FeedInLimit)

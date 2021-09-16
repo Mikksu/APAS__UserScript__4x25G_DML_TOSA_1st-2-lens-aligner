@@ -60,7 +60,7 @@ namespace UserScript
             if (double.TryParse(strch3.ToString(), out var ch3) == false) 
                 throw new Exception($"读取变量[{var2}]时发生错误。");
 
-            // convert to um
+            // convert to mm
             ch0 /= 1000;
             ch3 /= 1000;
 
